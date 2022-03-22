@@ -1,0 +1,25 @@
+{
+  "name": "aspirine-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlosjuarez-s/AspirineApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carlosjuarez-s/AspirineApp/issues"
+  },
+  "homepage": "https://github.com/carlosjuarez-s/AspirineApp#readme",
+  "dependencies": {
+    "http": "0.0.1-security",
+    "mongoose": "^6.2.7",
+    "nodemon": "^2.0.15"
+  }
+}
