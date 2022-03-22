@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/carlosjuarez-s/AspirineApp#readme",
   "dependencies": {
+    "body-parser": "^1.19.2",
+    "express": "^4.17.3",
     "http": "0.0.1-security",
     "mongoose": "^6.2.7",
     "nodemon": "^2.0.15"
