@@ -1,17 +1,27 @@
+//Imports
 const express = require('express');
 const mongoose = require('mongoose');
-const User = require('./models/userModel');
-const app = express();
+
 const bodyParser = require('body-parser');
-const userRouter = require ('./routes/userRouter')(User);
+
+//Models
+const Person = require('./models/personModel');
 
 
-mongoose.connect = ('mongodb://127.0.0.1:27017/userAPI');
+//Routers
+const personRouter = require ('./routers/personRouter')(Person);
 
 
+//Database
+const DB = 'aspirineApp'; //Pedriño, si usas otra DB en tu local, cambiala de aqui
+
+mongoose.connect = ('mongodb://127.0.0.1:27017/aspirineApp');
+
+
+const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/api', userRouter);
 app.listen(8080);
+app.use('/api', personRouter);

@@ -5,7 +5,7 @@ const routes = Person => {
     const personRouter = express.Router();
 
     const controller = personController(Person);
-    const { getPerson, postPerson, deletePerson, putPerson } = controller;
+    const { getPerson, postPerson, deletePerson, putPerson, postLogin } = controller;
 
     personRouter
         .route("/persons")
@@ -16,6 +16,10 @@ const routes = Person => {
         .route("/persons/:personId")
         .put(putPerson)
         .delete(deletePerson)    
+
+    personRouter
+        .route("/persons/login")
+        .post(postLogin)
 
     return personRouter;
 }

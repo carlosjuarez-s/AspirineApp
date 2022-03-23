@@ -4,7 +4,7 @@ const personController = Person => {
         const { query } = req;
         const response = await Person.find(query);
 
-        res.json(response);
+        res.send("a");
     }
 
     const postPerson = async(req, res) => {
@@ -44,7 +44,24 @@ const personController = Person => {
         res.send("Deleted person");
     }
 
-    return { getPerson, postPerson, deletePerson, putPerson }
+    const postLogin = async(req, res) => {
+        const body = req;
+        var response;
+
+        const person = await Person.findOne({
+            "userName": body.userName
+        })
+
+        if(body.password === person.password){
+            response = {messagge: "Login!"}
+        } else {
+            response = {messagge: ":("}
+        }
+
+        res.json(response);
+    } 
+
+    return { getPerson, postPerson, deletePerson, putPerson, postLogin }
 }
 
 module.exports = personController;
