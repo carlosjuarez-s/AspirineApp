@@ -4,13 +4,13 @@
 }
 
 body {
-  padding: 90px 20px 0px;
+  padding: 60px 20px 0px;
 }
 
 .header{
   background-color: rgb(62, 104, 184);
   position: fixed;
-  height: 80px;
+  height: 60px;
   width: 100%;
   top: 0;
   left: 0;
@@ -30,7 +30,7 @@ nav{
   font-size: 30px;
   font-weight: bold;
   padding:0 40px;
-  line-height: 70px;
+  line-height: 55px;
 }
 
 .nav-menu{
@@ -42,7 +42,7 @@ nav{
 .nav-menu-item{
   margin: 0 10px;
   font-size: 18px;
-  line-height: 70px;
+  line-height: 55px;
   width: max-content;
 }
 

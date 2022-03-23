@@ -1,26 +1,27 @@
 import React from 'react'
-
-import './Navbar.css'
+import {Link} from 'react-router-dom'
+import './NavbarOut.css'
 import DehazeIcon from '@mui/icons-material/Dehaze';
+
 
 const Navbar = () => {
 
   return (
     <header className='header'>
       <nav className='nav'>
-        <a href="#home" className='logo nav-link'>Logo</a>
+        <Link to="home" className='logo nav-link'>Logo</Link>
         <button className='toggle'>
           <DehazeIcon></DehazeIcon>
         </button>
           <ul className='nav-menu nav-menu_visible'>
             <li className='nav-menu-item'>
-              <a href="home" className='nav-link nav-menu-link'>Home</a>
+              <Link to="home" className='nav-link nav-menu-link'>Home</Link>
               </li>
             <li className='nav-menu-item'>
-              <a href="login" className='nav-link nav-menu-link'>Contact</a>
+              <Link to="login" className='nav-link nav-menu-link'>Log In</Link>
               </li>  
             <li className='nav-menu-item'>
-              <a href="#about" className='nav-link nav-menu-link'>Login</a>
+              <Link to="sigin" className='nav-link nav-menu-link'>Sign In</Link>
               </li>
           </ul> 
       </nav>
