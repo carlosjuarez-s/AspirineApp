@@ -4,7 +4,7 @@ const personController = Person => {
         const { query } = req;
         const response = await Person.find(query);
 
-        res.send("a");
+        res.json(response);
     }
 
     const postPerson = async(req, res) => {
@@ -45,14 +45,15 @@ const personController = Person => {
     }
 
     const postLogin = async(req, res) => {
-        const body = req;
+        const { body } = req;
         var response;
 
         const person = await Person.findOne({
             "userName": body.userName
         })
 
-        if(body.password === person.password){
+
+        if(body.password == person.password){
             response = {messagge: "Login!"}
         } else {
             response = {messagge: ":("}
