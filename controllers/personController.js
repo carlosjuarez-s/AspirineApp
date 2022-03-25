@@ -1,3 +1,7 @@
+const secret = require('../verifications/security');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
 const personController = Person => {
 
     const getPerson = async(req, res) => {
@@ -8,11 +12,21 @@ const personController = Person => {
     }
 
     const postPerson = async(req, res) => {
+        const { body } = req;
         const person = new Person(req.body);
+        var response;
 
-        await person.save();
+        const search = await Person.findOne({"userName": body.userName});
 
-        res.send("Person save");
+        if(search.userName != body.userName){
+            person.password = await bcrypt.hash(person.password, 10);
+            await person.save();
+            response = {message: "Person save", person: person}
+        } else {
+            response = {message: "This user is already in use"}
+        }
+        
+        res.json(response);
     }
 
     const putPerson = async(req, res) => {
@@ -26,7 +40,7 @@ const personController = Person => {
                     firstName: body.firstName,
                     lastName: body.lastName,
                     userName: body.userName,
-                    password: body.password,
+                    password: await bcrypt.hash(body.password, 10),
                     email: body.email,
                     address: body.address,
                     phone: body.phone
@@ -52,17 +66,41 @@ const personController = Person => {
             "userName": body.userName
         })
 
-
-        if(body.password == person.password){
-            response = {messagge: "Login!"}
+        if(await bcrypt.compare(body.password, person.password)){
+            const token = generatedToken(person);
+            response = {messagge: "Login!", token: token}
         } else {
-            response = {messagge: ":("}
+            response = {messagge: "Invalid Credentials"}
         }
 
         res.json(response);
     } 
 
-    return { getPerson, postPerson, deletePerson, putPerson, postLogin }
+    const generatedToken = Person => {
+        const payLod = {
+            firstName: Person.firstName,
+            lastName: Person.lastName
+        }
+    
+        return jwt.sign(payLod, "aspirineApp");
+    }
+
+    const getLoginValidate = async(req, res) => {
+        const { headers } = req;
+        const token = headers.token;
+        var response;
+
+        try {
+            var decoded = jwt.verify(token, "aspirineApp");
+            response = {message: "Verify!", token: decoded}
+        }catch(e) {
+            response = {error: e}
+        }
+
+        res.json(response);
+    }
+
+    return { getPerson, postPerson, deletePerson, putPerson, postLogin, getLoginValidate }
 }
 
 module.exports = personController;

@@ -1,7 +1,7 @@
 const express = require('express');
 const doctorController = require('../controllers/doctorController');
 
-const routesD = (Doctor) => {
+const routes = (Doctor) => {
 
 	const doctorRouter = express.Router();
 
@@ -20,4 +20,4 @@ const routesD = (Doctor) => {
 
 };
 
-module.exports = routesD;
+module.exports = routes;

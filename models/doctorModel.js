@@ -7,10 +7,10 @@ const doctorModel = new Schema(
 	{
 		firstName: {type:String},
 		lastName: {type:String},
-		userName: {type:String},
-		password: {type:String},
 		email: {type:String},
-		phone: {type:Number}
+		phone: {type:Number},
+		adressOffice: {type:String},
+		specialty: {type:String}
 	}
 )
 
