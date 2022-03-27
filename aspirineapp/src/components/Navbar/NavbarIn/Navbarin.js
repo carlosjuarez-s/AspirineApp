@@ -1,24 +1,24 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
-import './NavbarOut.css'
+import {NavLink} from 'react-router-dom'
+import './navbarIn.css'
 
 
-const Navbar = (props) => {
+const NavbarIn = (props) => {
 
   return (
     <header className='header'>
       <nav className='nav'>
-        <Link to="home" className='logo nav-link'>Logo</Link>
+        <NavLink to="home" className='logo nav-link'>Logo</NavLink>
         
           <ul className='nav-menu nav-menu_visible'>
             <li className='nav-menu-item'>
-              <Link to="home" className='nav-link nav-menu-link'>Registrar turno</Link>
+              <NavLink to="home" className='nav-link nav-menu-link'>Bienvenido</NavLink>
               </li>
             <li className='nav-menu-item'>
-              <Link to="login" className='nav-link nav-menu-link'>Salir</Link>
+              <NavLink to="login" className='nav-link nav-menu-link'>Registrar Turno</NavLink>
               </li>  
             <li className='nav-menu-item'>
-              <Link to="sigin" className='nav-link nav-menu-link'>Bienvenido</Link>
+              <NavLink to="sigin" className='nav-link nav-menu-link'>Salir</NavLink>
               </li>
           </ul> 
       </nav>
@@ -26,4 +26,4 @@ const Navbar = (props) => {
   )
 }
 
-export default Navbar
+export default NavbarIn
