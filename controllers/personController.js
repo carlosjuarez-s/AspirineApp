@@ -1,6 +1,7 @@
-const secret = require('../verifications/security');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
+const Shift = require('../models/shiftModel');
 
 const personController = Person => {
 
@@ -18,12 +19,18 @@ const personController = Person => {
 
         const search = await Person.findOne({"userName": body.userName});
 
-        if(search.userName != body.userName){
+        if(search != null){
+            if(search.userName != body.userName){
+                person.password = await bcrypt.hash(person.password, 10);
+                await person.save();
+                response = {message: "Person save", person: person}
+            } else {
+                response = {message: "This user is already in use"}
+            }
+        } else{
             person.password = await bcrypt.hash(person.password, 10);
             await person.save();
             response = {message: "Person save", person: person}
-        } else {
-            response = {message: "This user is already in use"}
         }
         
         res.json(response);
@@ -100,7 +107,57 @@ const personController = Person => {
         res.json(response);
     }
 
-    return { getPerson, postPerson, deletePerson, putPerson, postLogin, getLoginValidate }
+    const getShifts = async(req, res) => {
+        const { params } = req;
+
+        Person
+            .findById(params.personId)
+            .populate('shift')
+            .exec(function(err, person) {
+                if(!person) res.status(404).send({message: "Person no exist"})
+                if(err) res.json(err);
+                return res.json({message: "Shift found", shift: person.shift});
+            })
+    }
+
+    const patchShift = async(req, res) => {
+        const { body, params } = req;
+        var response;
+        const idShift = mongoose.Types.ObjectId(body.shift); 
+
+        const shift = await Shift.findById(idShift);
+        const person = await Person.findById(params.personId)
+
+        console.log(shift.taken);
+
+        if(shift.taken){
+            response = {message: "Shift Taken"}
+        } else {
+            await Person.updateOne(
+                {
+                    _id: params.personId
+                },
+                {
+                    $set: {
+                        shift: idShift
+                    }
+                }
+            )
+            console.log(person);
+            shift.patient = {
+                firstName: person.firstName,
+                lastName: person.lastName,
+            };
+            shift.taken = true;
+            console.log(shift);
+            await shift.save();
+            response = {message: "Assigned shift", shift: shift};
+        }
+
+        res.json(response)
+    }
+
+    return { getPerson, postPerson, deletePerson, putPerson, postLogin, getLoginValidate, patchShift, getShifts}
 }
 
 module.exports = personController;

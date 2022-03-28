@@ -5,7 +5,7 @@ const routes = Person => {
     const personRouter = express.Router();
 
     const controller = personController(Person);
-    const { getPerson, postPerson, deletePerson, putPerson, postLogin, getLoginValidate } = controller;
+    const { getPerson, postPerson, deletePerson, putPerson, postLogin, getLoginValidate, patchShift, getShifts } = controller;
 
     personRouter
         .route("/persons")
@@ -24,6 +24,11 @@ const routes = Person => {
     personRouter
         .route("/persons/login/validate")
         .get(getLoginValidate)
+
+    personRouter
+        .route("/persons/shift/:personId")
+        .patch(patchShift)
+        .get(getShifts)
 
     return personRouter;
 }

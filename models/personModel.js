@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Shift = require('./shiftModel');
 
 const { Schema } = mongoose;
 
@@ -10,7 +11,8 @@ const personModel = new Schema(
 		password: {type:String},
 		email: {type:String},
 		address: {type:String},
-		phone: {type:Number}
+		phone: {type:Number},
+		shift: {type:[Schema.Types.ObjectId], ref: "Shift"}
     }
 )
 

@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
-const doctorModel = require('./doctorModel');
-const personModel = require('./personModel');
 const { Schema } = mongoose;
 
 const shiftModel = Schema(
     {
-        doctor: {type:Object},
-        patient: {type:Object},
-        schedule: {type:String},
-        date: {type:Date}
+        doctor: {type:Object, ref:"Doctor", require},
+        patient: {type:Object, ref:"Patient", default: null},
+        date: {type:Date, default: Date.now()},
+        taken: {type:Boolean}
     }
 )
 
