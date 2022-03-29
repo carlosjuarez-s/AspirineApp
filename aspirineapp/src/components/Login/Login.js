@@ -43,7 +43,7 @@ const Login = () =>{
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Log in
+                Sign in
               </Typography>
               <Box component="form"  >
                 <TextField
@@ -86,7 +86,7 @@ const Login = () =>{
                   </Grid>
                   <Grid item>
                     <Button >
-                      Sign Up
+                      aaa
                     </Button>
           
         
