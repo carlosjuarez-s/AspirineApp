@@ -1,6 +1,9 @@
 const express = require('express');
 const personController = require('../controllers/personController');
 
+const validator = require('express-joi-validation').createValidator();
+const personValidations = require('../validations/personValidations');
+
 const routes = Person => {
     const personRouter = express.Router();
 
@@ -10,7 +13,7 @@ const routes = Person => {
     personRouter
         .route("/persons")
         .get(getPerson)
-        .post(postPerson)
+        .post(validator.body(personValidations), postPerson)
 
     personRouter
         .route("/persons/:personId")

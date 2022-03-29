@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-//const { schema } = require('./personModel');
 
 const { Schema } = mongoose;
 

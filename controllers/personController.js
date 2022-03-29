@@ -61,6 +61,7 @@ const personController = Person => {
     const deletePerson = async(req, res) => {
         const { params } = req;
         const person = await Person.findById(params.personId);
+        console.log(person);
         await Person.deleteOne(person);
         res.send("Deleted person");
     }
@@ -116,7 +117,8 @@ const personController = Person => {
             .exec(function(err, person) {
                 if(!person) res.status(404).send({message: "Person no exist"})
                 if(err) res.json(err);
-                return res.json({message: "Shift found", shift: person.shift});
+                if(person.shift.length == 0) res.status(200).send("Shift not found");
+                else return res.json({message: "Shift found", shift: person.shift});
             })
     }
 

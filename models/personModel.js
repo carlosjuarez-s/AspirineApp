@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Shift = require('./shiftModel');
 
 const { Schema } = mongoose;
 
