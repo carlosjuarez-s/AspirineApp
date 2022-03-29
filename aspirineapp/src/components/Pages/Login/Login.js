@@ -11,10 +11,19 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
+import {useState} from 'react';
+import axios from 'axios';
 import Modal from '@mui/material/Modal';
 
 const Login = () =>{
+    const [mail, setMail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleOnSubmit = async(event) =>{
+      event.preventDefault();
+      console.log(mail, password);
+    }
+
     const style = {
         position: 'absolute',
         top: '50%',
@@ -59,6 +68,8 @@ const Login = () =>{
                   name="email"
                   autoComplete="email"
                   autoFocus
+                  value={mail}
+                  onChange={e => setMail(e.target.value)}
                 />
                 <TextField
                   margin="normal"
@@ -69,6 +80,8 @@ const Login = () =>{
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
                 />
                 <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}
@@ -79,6 +92,7 @@ const Login = () =>{
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  onClick={handleOnSubmit}
                 >
                   Sign In
                 </Button>
