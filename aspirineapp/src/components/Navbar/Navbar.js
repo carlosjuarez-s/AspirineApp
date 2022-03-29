@@ -1,6 +1,6 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
-import './NavbarOut.css'
+import './Navbar.css'
 import DehazeIcon from '@mui/icons-material/Dehaze';
 
 
