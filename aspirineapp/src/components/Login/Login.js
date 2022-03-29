@@ -9,13 +9,22 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import axios from 'axios';
+
 
 
 
 const Login = () =>{
+  const [mail, setMail] = useState('');
+  const [password, setPassword] = useState('');
     
+  const handleOnSubmit = async(event) =>{
+    event.preventDefault();
+    console.log("aaaaaaaaaaa");
+    console.log(mail, password);
+  }
+
     return (
-        
           <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box
@@ -28,15 +37,13 @@ const Login = () =>{
                 padding:8,
                 borderRadius:1,
                 boxShadow: 24,
-
-                
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Sign in
+                Log in
               </Typography>
               <Box component="form"  >
                 <TextField
@@ -48,6 +55,7 @@ const Login = () =>{
                   name="email"
                   autoComplete="email"
                   autoFocus
+                  onChange={e => setMail(e.target.value)}
                 />
                 <TextField
                   margin="normal"
@@ -58,9 +66,11 @@ const Login = () =>{
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  onChange={e => setPassword(e.target.value)}
                 />
               
                 <Button
+                  startIcon={handleOnSubmit}
                   type="submit"
                   fullWidth
                   variant="contained"
@@ -86,7 +96,6 @@ const Login = () =>{
             </Box>
             
           </Container>
-        
       );
 }
 export default Login;
