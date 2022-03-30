@@ -16,3 +16,6 @@ img{
     text-align: center;
     margin: 10px 0;
 }
+Button{
+    text-decoration-line:none;
+}

@@ -17,6 +17,10 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
+import axios from 'axios';
+import { useState } from 'react';
+
+const shiftURL = 'http://localhost:8080/api/shift';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -33,9 +37,23 @@ const rows = [
 const RecordShift = () => {
   const [value, setValue] = React.useState(new Date());
   const [age, setAge] = React.useState('');
+  const [shift, setShift] = React.useState([]);
+
   const handleChange = (event) => {
     setAge(event.target.value);
   }
+
+  const getShift = async () => {
+    await axios.get(shiftURL)
+    .then(resp => {
+      setShift(resp.data);
+    }).catch(e => {
+      console.log(e.response.data)
+    })
+  }
+
+  getShift();
+
   return (
     <div>
       <div className='Calendar'>
@@ -66,17 +84,15 @@ const RecordShift = () => {
               </TableRow>
             </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {shift.map((element) => (
             <TableRow
-              key={row.name}
+              key={element.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
+              <TableCell component="th" scope="row">{element.firstName}</TableCell>
+              <TableCell align="right">{element.doctor}</TableCell>
+              <TableCell align="right">{element.hour}</TableCell>
+              <TableCell align="right">{element.date}</TableCell>
 
             </TableRow>
             ))}
@@ -122,10 +138,8 @@ const RecordShift = () => {
           </Stack>
         </div>
       </div>
-      
-      
     </div>
-  );  
-  }
+  )   
+}
 
 export default RecordShift

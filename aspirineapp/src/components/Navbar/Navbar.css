@@ -8,7 +8,7 @@ body {
 }
 
 .header{
-  background-color: rgb(62, 104, 184);
+  background-color: #1C5D99;
   position: fixed;
   height: 60px;
   width: 100%;
@@ -52,13 +52,13 @@ nav{
 }
 
 .nav-menu-link:hover{
-  background-color: rgb(39, 78, 151);
+  background-color: #639FAB;
   transition: 0.5;
 }
 
 .toggle{
   color: white;
-  background-color:rgb(62, 104, 184);
+  background-color:#BBCDE5;
   background: none;
   border: none;
   font-size: 30px;
@@ -86,7 +86,7 @@ nav{
     flex-direction: column;
     align-items: center;
     margin-right: 20px;
-    background-color: rgb(62, 104, 184);
+    background-color: #1C5D99;
     position: fixed;
     left: 0;
     top: 60px;
