@@ -4,7 +4,7 @@ export default function(){
     const getToken = () => {
         const sessionToken = sessionStorage.getItem("token");
         const userToken = JSON.parse(sessionToken);
-        return userToken;
+        return userToken || "";
     }
 
     const [token, setToken] = useState(getToken());

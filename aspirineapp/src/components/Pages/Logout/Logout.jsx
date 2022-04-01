@@ -34,10 +34,10 @@ export default function BasicModal() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Se vimo en disney
+            Logout
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Adios
+            See you later.
           </Typography>
         </Box>
       </Modal>

@@ -18,53 +18,74 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 
 const shiftURL = 'http://localhost:8080/api/shift';
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Facundo', 'Lorenzo','15:30', '12/03/2022'),
-  createData('carlos', 'Luciano','15:30', '12/03/2022'),
-  createData('Nahuel', 'Santiago','15:30', '12/03/2022'),
-  createData('Emiliano', 'Tomas','15:30', '12/03/2022'),
-  createData('Agustin', 'Lorenzo','15:30', '12/03/2022'),
-];
+const doctorURL = 'http://localhost:8080/api/doctor';
 
 const RecordShift = () => {
-  const [value, setValue] = React.useState(new Date());
-  const [age, setAge] = React.useState('');
-  const [shift, setShift] = React.useState([]);
+  const [value, setValue] = useState(new Date());
+  const [doctorName, setDoctorName] = useState('');
+  const [shift, setShift] = useState([]);
+  const [hour, setHour] = useState('');
+  const [doctor, setDoctor] = useState([]);
+  
+  const getDoctor = async() =>{
+    await axios.get(doctorURL)
+    .then(response =>  {
+      setDoctor(response.data)
+    })
+  }
+
+  useEffect(() =>
+  getDoctor()
+  , [])
+
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setDoctorName(event.target.value);
   }
 
   const getShift = async () => {
     await axios.get(shiftURL)
-    .then(resp => {
-      setShift(resp.data);
-    }).catch(e => {
-      console.log(e.response.data)
+    .then(response => {
+    setShift(response.data)
     })
   }
+  
+  useEffect(() => {
+    getShift();
+  }, [shift])
 
-  getShift();
+  const fullDate=(value)=>{
+    let formatDate= value.getDate()+"/"+(value.getMonth()+1)+"/"+ value.getFullYear()
+    return formatDate;
+  }
 
-  return (
+  const handleOnSubmit = async (event) => {
+    event.preventDefault();
+    const token = JSON.parse(sessionStorage.getItem("token"));
+  
+    await axios.post(shiftURL,{
+      doctor: doctorName,
+      hour: hour,
+      date: fullDate(value),
+      taken: false,
+      })
+  }
+
+  return ( 
     <div>
       <div className='Calendar'>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Stack spacing={3}>
            <DatePicker
             views={['day']}
-            label="Just date"
+            label="Date"
             value={value}
-           onChange={(newValue) => {
-            setValue(newValue);
+           onChange={(e) => {
+            setValue(e);
           }}
             renderInput={(params) => <TextField {...params} helperText={null} />}
           />
@@ -77,23 +98,20 @@ const RecordShift = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Names</TableCell>
-                <TableCell align="right">Doctor</TableCell>
-                <TableCell align="right">Horario</TableCell>
-                <TableCell align="right">Fecha</TableCell>
+                <TableCell>Doctor</TableCell>
+                <TableCell align="right">Hour</TableCell>
+                <TableCell align="right">Date</TableCell>
               </TableRow>
             </TableHead>
           <TableBody>
             {shift.map((element) => (
             <TableRow
-              key={element.name}
+              key={element.doctor}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">{element.firstName}</TableCell>
-              <TableCell align="right">{element.doctor}</TableCell>
+              <TableCell align="left">{element.doctor}</TableCell>
               <TableCell align="right">{element.hour}</TableCell>
               <TableCell align="right">{element.date}</TableCell>
-
             </TableRow>
             ))}
             </TableBody>
@@ -103,8 +121,10 @@ const RecordShift = () => {
 
       <div className='newTurn'>
       <TextField
+        value={hour}
+        onChange={e => setHour(e.target.value)}
         id="time"
-        label="Elegir horario"
+        label="Choose Schedule"
         type="time"
         defaultValue="12:00"
         InputLabelProps={{
@@ -116,28 +136,28 @@ const RecordShift = () => {
         sx={{left: 22, width: 130 , mt:3 }}
       />
       <FormControl variant="standard" sx={{ m: 3, minWidth: 130 }}>
-        <InputLabel id="demo-simple-select-standard-label">Médico</InputLabel>
+        <InputLabel id="demo-simple-select-standard-label">Doctor</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
-          value={age}
+          value={doctorName}
           onChange={handleChange}
           label="Age"
         >
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {doctor.map(doctorName => <MenuItem value={doctorName.firstName} onChange={e => setDoctorName(e.target.value)}>{doctorName.firstName}</MenuItem>)}
+  
         </Select>
       </FormControl>
         <div>
           <Stack  direction="row" justifyContent="center" alignItems="center" spacing={2}> 
-            <Button variant="contained">Generar turno</Button>
+            <Button variant="contained" onClick={handleOnSubmit}>Generate Shift</Button>
           </Stack>
         </div>
       </div>
+
     </div>
   )   
 }

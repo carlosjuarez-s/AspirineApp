@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <header className='header'>
       <nav className='nav'>
-        <NavLink to="" className='logo nav-link'>Logo</NavLink>
+        <NavLink to="" className='logo nav-link'></NavLink>
         <button className='toggle'>
           <DehazeIcon></DehazeIcon>
         </button>

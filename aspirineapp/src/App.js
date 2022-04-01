@@ -12,30 +12,26 @@ import useToken from './components/Security/token'
 function App() {
   const { token, setToken } = useToken();
 
-  //Pongan true o false para cambiar inicio y probar si quieren
   if(!token){
-    console.log("No existe token");
     return(
       <div>
-        <h1>Welcome!</h1>
         <Router>
           <Routes>
             <Route path="/*" element={<Login setToken={setToken} />}/>
+            <Route path="/SignUp" element={<NewUser/>}/>
           </Routes>
         </Router>
       </div> 
     )
   }else {
-    console.log(token)
     return (
       <div>
         <Router>  
           <Navbar/>
            <Routes>
-              <Route path="/*" element={<Home data={token}/>}/>
+              <Route path="/*" element={<Home/>}/>
               <Route path="/recordshift" element={<RecordShift/>}/>
-              <Route path="/profile" element={<Profile data={token}/>}/>
-              <Route path="/SignUp" element={<NewUser/>}/>
+              <Route path="/profile" element={<Profile/>}/>
            </Routes>
         </Router>
       </div>

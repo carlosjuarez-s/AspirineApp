@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import {useState} from 'react';
 import axios from 'axios';
 import './NewUser.css';
+import { WindowSharp } from '@mui/icons-material';
 
 
 const loginUrl = "http://localhost:8080/api/persons";
@@ -43,11 +44,18 @@ const NewUser = () =>{
         setMsgError(error.response.data);
       })    
   }
+  
+  const login = () =>{
+    window.location.reload(true);
+  }
 
     return (
         <div>
           {sucess
-            ? <div>Registrado</div>
+            ? 
+            <div>
+              <h2 class='register'>Ready!</h2>
+            </div>
             : 
             <Box 
             component="form"
