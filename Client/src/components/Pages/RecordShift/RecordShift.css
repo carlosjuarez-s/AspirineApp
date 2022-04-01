@@ -1,0 +1,10 @@
+.Calendar {
+  margin: 30px 0;
+}
+
+.newTurn {
+  display:grid;
+  justify-content: center;
+  align-items: center;
+
+}
